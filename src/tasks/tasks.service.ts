@@ -38,4 +38,10 @@ export class TasksService {
     task.status = status;
     return task;
   }
+
+  updateTaskDescription(id: string, description: string): Task {
+    const task = this.getTaskById(id);
+    task.description = description;
+    return task;
+  }
 }
