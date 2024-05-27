@@ -1,5 +1,5 @@
 //nest g controller tasks --no-spec
-import { Body, Controller, Get, Param, Post, Delete, Patch, Query } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Delete, Patch, Query, NotFoundException } from '@nestjs/common';
 import { TasksService } from './tasks.service';
 import { Task, TaskStatus } from './task.model';
 import { CreateTaskDto } from './dto/create-task.dto';
@@ -20,7 +20,13 @@ export class TasksController {
 
   @Get('/:id')
   getTaskById(@Param('id') id: string): Task {
-    return this.taskService.getTaskById(id);
+    const foundTask = this.taskService.getTaskById(id);
+
+    if (!foundTask) {
+      throw new NotFoundException(`Task with ID "${id}" not found`);
+    }
+
+    return foundTask;
   }
 
   @Post()
