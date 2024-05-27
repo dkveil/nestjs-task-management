@@ -4,6 +4,7 @@ export interface Task {
   description: string;
   status: TaskStatus;
   createAt: Date;
+  finishAt: Date;
 }
 
 export enum TaskStatus {

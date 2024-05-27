@@ -41,6 +41,7 @@ export class TasksService {
       title,
       description,
       createAt: new Date(),
+      finishAt: null,
       status: TaskStatus.OPEN,
     };
     this.tasks.push(task);
@@ -49,17 +50,31 @@ export class TasksService {
 
   deleteTask(id: string): void {
     const foundTask = this.getTaskById(id);
+
     this.tasks = this.tasks.filter(task => task.id !== foundTask.id);
   }
 
   updateTaskStatus(id: string, status: TaskStatus): Task {
     const task = this.getTaskById(id);
+
+    if (!task) return null;
+
     task.status = status;
+
+    if (status === TaskStatus.DONE) {
+      task.finishAt = new Date();
+    } else {
+      task.finishAt = null;
+    }
+
     return task;
   }
 
   updateTaskDescription(id: string, description: string): Task {
     const task = this.getTaskById(id);
+
+    if (!task) return null;
+
     task.description = description;
     return task;
   }
