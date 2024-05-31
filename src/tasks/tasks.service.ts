@@ -85,12 +85,16 @@ export class TasksService {
     return foundTask;
   }
 
-  // updateTaskDescription(id: string, description: string): Task {
-  //   const task = this.getTaskById(id);
+  async updateTaskDescription(id: string, description: string): Promise<Task> {
+    const foundTask = await this.taskRepository.findOne({ where: { id } });
 
-  //   if (!task) return null;
+    if (!foundTask) {
+      throw new NotFoundException(`Task with ID "${id}" not found`);
+    }
 
-  //   task.description = description;
-  //   return task;
-  // }
+    foundTask.description = description;
+
+    await this.taskRepository.save(foundTask);
+    return foundTask;
+  }
 }
