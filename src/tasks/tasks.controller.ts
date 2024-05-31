@@ -34,18 +34,14 @@ export class TasksController {
     return this.taskService.deleteTask(id);
   }
 
-  // @Patch('/:id/status')
-  // updateTaskStatus(@Param('id') id: string, @Body() updateTaskDto: UpdateTaskDto): Task {
-  //   const { status } = updateTaskDto;
+  @Patch('/:id/status')
+  updateTaskStatus(@Param('id') id: string, @Body() updateTaskDto: UpdateTaskDto): Promise<Task> {
+    const { status } = updateTaskDto;
 
-  //   if (!status) throw new NotFoundException('Status is required');
+    if (!status) throw new NotFoundException('Status is required');
 
-  //   const task = this.taskService.updateTaskStatus(id, status);
-
-  //   if (!task) throw new NotFoundException('Task not found');
-
-  //   return task;
-  // }
+    return this.taskService.updateTaskStatus(id, status);
+  }
 
   // @Patch('/:id/description')
   // updateTaskDescription(@Param('id') id: string, @Body() UpdateTaskDto: UpdateTaskDto): Task {
