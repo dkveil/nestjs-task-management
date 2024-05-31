@@ -1,12 +1,14 @@
 //nest g controller tasks --no-spec
-import { Body, Controller, Get, Param, Post, Delete, Patch, Query, NotFoundException } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Delete, Patch, Query, NotFoundException, UseGuards } from '@nestjs/common';
 import { TasksService } from './tasks.service';
 import { Task } from './task.model';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { GetTasksFilterDto } from './dto/get-tasks-filter.dto';
 import { UpdateTaskDto } from './dto/update-task.dto';
+import { AuthGuard } from '@nestjs/passport';
 
 @Controller('tasks')
+@UseGuards(AuthGuard())
 export class TasksController {
   constructor(private taskService: TasksService) {}
 
