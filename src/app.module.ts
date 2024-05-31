@@ -17,7 +17,7 @@ import { AuthModule } from './auth/auth.module';
       username: process.env.POSTGRES_USERNAME,
       password: process.env.POSTGRES_PASSWORD,
       database: process.env.POSTGRES_DB_NAME,
-      autoLoadEntities: true,
+      entities: [__dirname + '/**/*.entity.{js,ts}'],
       synchronize: true,
     }),
     AuthModule,
