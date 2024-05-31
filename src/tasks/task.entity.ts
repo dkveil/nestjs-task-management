@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn } from "typeorm";
 import { TaskStatus } from "./task.model";
 
 @Entity()
@@ -12,11 +12,11 @@ export class Task {
   @Column()
   description: string;
 
-  @Column()
+  @CreateDateColumn({type: 'timestamp'})
   createAt: Date;
 
-  @Column()
-  finishAt: Date;
+  @Column({type: 'timestamp', default: null, nullable: true})
+  finishAt: Date | null;
 
   @Column()
   status: TaskStatus;
