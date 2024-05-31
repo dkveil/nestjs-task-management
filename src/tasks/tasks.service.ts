@@ -66,21 +66,24 @@ export class TasksService {
     return;
   }
 
-  // updateTaskStatus(id: string, status: TaskStatus): Task {
-  //   const task = this.getTaskById(id);
+  async updateTaskStatus(id: string, status: TaskStatus): Promise<Task> {
+    const foundTask = await this.taskRepository.findOne({ where: { id } });
 
-  //   if (!task) return null;
+    if (!foundTask) {
+      throw new NotFoundException(`Task with ID "${id}" not found`);
+    }
 
-  //   task.status = status;
+    foundTask.status = status;
 
-  //   if (status === TaskStatus.DONE) {
-  //     task.finishAt = new Date();
-  //   } else {
-  //     task.finishAt = null;
-  //   }
+    if (status === TaskStatus.DONE) {
+      foundTask.finishAt = new Date();
+    } else {
+      foundTask.finishAt = null;
+    }
 
-  //   return task;
-  // }
+    await this.taskRepository.save(foundTask);
+    return foundTask;
+  }
 
   // updateTaskDescription(id: string, description: string): Task {
   //   const task = this.getTaskById(id);
