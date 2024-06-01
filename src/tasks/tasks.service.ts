@@ -52,8 +52,8 @@ export class TasksService {
     return;
   }
 
-  async updateTaskStatus(id: string, status: TaskStatus): Promise<Task> {
-    const foundTask = await this.taskRepository.findOne({ where: { id } });
+  async updateTaskStatus(id: string, status: TaskStatus, user: User): Promise<Task> {
+    const foundTask = await this.taskRepository.findOne({ where: { id, user } });
 
     if (!foundTask) {
       throw new NotFoundException(`Task with ID "${id}" not found`);
@@ -71,8 +71,8 @@ export class TasksService {
     return foundTask;
   }
 
-  async updateTaskDescription(id: string, description: string): Promise<Task> {
-    const foundTask = await this.taskRepository.findOne({ where: { id } });
+  async updateTaskDescription(id: string, description: string, user: User): Promise<Task> {
+    const foundTask = await this.taskRepository.findOne({ where: { id, user } });
 
     if (!foundTask) {
       throw new NotFoundException(`Task with ID "${id}" not found`);

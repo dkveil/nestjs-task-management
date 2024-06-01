@@ -35,20 +35,28 @@ export class TasksController {
   }
 
   @Patch('/:id/status')
-  updateTaskStatus(@Param('id') id: string, @Body() updateTaskDto: UpdateTaskDto): Promise<Task> {
+  updateTaskStatus(
+    @GetUser() user: User,
+    @Param('id') id: string,
+    @Body() updateTaskDto: UpdateTaskDto,
+  ): Promise<Task> {
     const { status } = updateTaskDto;
 
     if (!status) throw new NotFoundException('Status is required');
 
-    return this.taskService.updateTaskStatus(id, status);
+    return this.taskService.updateTaskStatus(id, status, user);
   }
 
   @Patch('/:id/description')
-  updateTaskDescription(@Param('id') id: string, @Body() UpdateTaskDto: UpdateTaskDto): Promise<Task> {
+  updateTaskDescription(
+    @GetUser() user: User,
+    @Param('id') id: string,
+    @Body() UpdateTaskDto: UpdateTaskDto,
+  ): Promise<Task> {
     const { description } = UpdateTaskDto;
 
     if (!description) throw new NotFoundException('Description is required');
 
-    return this.taskService.updateTaskDescription(id, description);
+    return this.taskService.updateTaskDescription(id, description, user);
   }
 }
