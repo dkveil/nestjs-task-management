@@ -1,0 +1,16 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:latest
+    container_name: ${DOCKER_CONTAINER_NAME}
+    ports:
+      - '${DOCKER_PORT}:${DOCKER_PORT}'
+    environment:
+      POSTGRES_PASSWORD: ${DOCKER_PASSWORD}
+      POSTGRES_DB: ${DOCKER_DB_NAME}
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+
+volumes:
+  postgres-data:
